@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using News.Models;
 using News.Services;
 
 namespace News.Pages
 {
     public class IndexModel : PageModel
     {
+        public NewsFinance news;
         private readonly ILogger<IndexModel> _logger;
         private readonly INewsService _newsService;
 
@@ -17,7 +19,7 @@ namespace News.Pages
 
         public void OnGet()
         {
-            _newsService.GetFinanceNews();
+            news = _newsService.GetFinanceNews();
         }
     }
 }

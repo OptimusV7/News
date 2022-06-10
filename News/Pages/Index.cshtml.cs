@@ -21,5 +21,10 @@ namespace News.Pages
         {
             news = _newsService.GetFinanceNews();
         }
+
+        public void OnGetLoadMoreNews(int offset)
+        {
+
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace News.Services
 {
     public interface INewsService
     {
-        NewsFinance GetFinanceNews();
+        NewsFinance GetFinanceNews(int offset);
     }
 
     public class NewsService : INewsService
@@ -15,7 +15,7 @@ namespace News.Services
         {
             _configuration = configuration;
         }
-        public NewsFinance GetFinanceNews()
+        public NewsFinance GetFinanceNews(int offset)
         {
             string apiKey = _configuration.GetValue<string>("API_KEY");
             string baseUrl = _configuration.GetValue<string>("API_URL");
@@ -23,7 +23,8 @@ namespace News.Services
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
-                HttpResponseMessage response = client.GetAsync("?apikey=" + apiKey).Result;
+                var parameters = string.Format("?apikey={0}&offset={1}&data={2}&sort={3}", apiKey, offset, "today", "desc");
+                HttpResponseMessage response = client.GetAsync(parameters).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadAsStringAsync().Result;
